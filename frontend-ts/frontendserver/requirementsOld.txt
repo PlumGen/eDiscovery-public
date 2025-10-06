@@ -1,0 +1,16 @@
+google-cloud-aiplatform
+functions_framework
+pandas
+sqlalchemy==1.4.52
+
+psycopg2-binary
+gunicorn==20.1.0
+flask
+Flask-Session
+requests
+flask-cors
+flask-restful
+faiss-cpu
+scikit-learn
+python-dotenv
+gevent

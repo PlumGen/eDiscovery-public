@@ -1,0 +1,17 @@
+gcloud auth login
+gcloud auth configure-docker us-east4-docker.pkg.dev
+gcloud services enable artifactregistry.googleapis.com run.googleapis.com
+docker build -t us-east4-docker.pkg.dev/ediscovery-452217/my-repo/my-fullstack-app .
+docker push us-east4-docker.pkg.dev/ediscovery-452217/my-repo/my-fullstack-app
+gcloud run deploy my-fullstack-app --image=us-east4-docker.pkg.dev/ediscovery-452217/my-repo/my-fullstack-app --platform=managed --region=us-east4 --allow-unauthenticated --port=8080
+
+
+gcloud services enable sqladmin.googleapis.com
+gcloud sql instances describe my-database --format="value(connectionName)"
+
+/usr/share/nginx/html
+
+
+captcha 
+site key 6Lfk2OwqAAAAAGLQMTAPWx6-IFCalNwngLIcMcKy
+secret key 6Lfk2OwqAAAAAECAbEAhO--50DIEQLC9txMood9g
