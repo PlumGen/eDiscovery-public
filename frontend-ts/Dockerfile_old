@@ -1,0 +1,49 @@
+# Step 1: Build the React application
+
+# Use a node image to build the React app
+FROM node:20 AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to install dependencies
+COPY appfolder/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the React app source code
+COPY appfolder/ ./
+
+# Build the React app
+RUN npm run build
+
+# Step 2: Serve the React application with Nginx
+
+# Use an nginx image to serve the built app
+FROM nginx:alpine
+
+# Copy the build folder from the build stage to the nginx serve directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80 for the web server (nginx default)
+EXPOSE 80
+
+# Copy the entrypoint script into the container
+COPY entrypoint.sh /entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh
+
+# Use the entrypoint script to start Nginx
+ENTRYPOINT ["/entrypoint.sh"]
+
+
+
+
+
+# Start nginx, no need for CMD because the base image handles that
+
+#docker build -t react-app .
+#docker run -p 3000:80 react-app
